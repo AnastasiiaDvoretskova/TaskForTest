@@ -1,0 +1,101 @@
+#include <iostream>
+
+using namespace std;
+
+void InputArray(int *array, int array_size)
+{
+	if ((array_size >= 2) & (array_size <= 10000))
+	{
+		for (int i = 0; i < array_size; i++)
+			cin >> array[i];
+	}
+}
+
+void QuickSortForLeft(int *array, int first, int last)
+{
+	if (first < last)
+	{
+		int left = first, right = last, middle = array[(left + right) / 2];
+		do {
+				while (array[left] < middle) left++;
+				while (array[right] > middle) right--;
+
+				if (left <= right) {
+					{ int tmp = array[left];
+					array[left] = array[right];
+					array[right] = tmp;
+					left++;
+					right--;
+					}
+				}
+			} while (left <= right);
+		QuickSortForLeft(array, first, right);
+		QuickSortForLeft(array, left, last);
+		}
+	}
+
+void QuickSortForRight(int *array, int first, int last)
+{
+	if (first < last)
+	{
+		int left = first, right = last, middle = array[(left + right) / 2];
+		do {
+			while (array[left] > middle) left++;
+			while (array[right] < middle) right--;
+
+			if (left <= right) {
+				{ int tmp = array[left];
+				array[left] = array[right];
+				array[right] = tmp;
+				left++;
+				right--;
+				}
+			}
+		} while (left <= right);
+		QuickSortForRight(array, first, right);
+		QuickSortForRight(array, left, last);
+	}
+}
+
+void ParitySort(int *array, int first, int last)
+{
+	if (first < last)
+	{
+		int left = first, right = last - 1, middle = array[(left + right) / 2];
+		do {
+			while (array[left] % 2 == 0) left++;
+			while (array[right] % 2 == 1) right--;
+
+			if (left <= right) {
+				{ int tmp = array[left];
+				array[left] = array[right];
+				array[right] = tmp;
+				left++;
+				right--;
+				}
+			}
+		} while (left <= right);
+		QuickSortForLeft(array, first, right);
+		QuickSortForRight(array, left, last);
+	}
+}
+
+void OutputArray(int *array, int array_size)
+{
+	if ((array_size >= 2) & (array_size <= 10000))
+	{
+		for (int i = 0; i < array_size; i++)
+			cout << array[i];
+	}
+}
+
+void main()
+{
+	int array_size;
+	cin >> array_size;
+	int *array;
+	array = new int[array_size];
+	InputArray(array, array_size);
+	ParitySort(array, 0, array_size);
+	OutputArray(array, array_size);		
+}
